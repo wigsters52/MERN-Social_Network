@@ -1,0 +1,32 @@
+{
+  "name": "mern-social_network",
+  "version": "1.0.0",
+  "description": "Social Network for developers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wigsters52/MERN-Social_Network.git"
+  },
+  "author": "Ryan Wiggins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wigsters52/MERN-Social_Network/issues"
+  },
+  "homepage": "https://github.com/wigsters52/MERN-Social_Network#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^6.0.1",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.3",
+    "nodemon": "^2.0.7",
+    "request": "^2.88.2"
+  }
+}
