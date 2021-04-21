@@ -32,7 +32,6 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
   
-      // destructure the request
       const {
         website,
         skills,
@@ -41,11 +40,9 @@ router.post(
         instagram,
         linkedin,
         facebook,
-        // spread the rest of the fields we don't need to check
         ...rest
       } = req.body;
   
-      // build a profile
       const profileFields = {
         user: req.user.id,
         website:
@@ -58,19 +55,15 @@ router.post(
         ...rest
       };
   
-      // Build socialFields object
       const socialFields = { youtube, twitter, instagram, linkedin, facebook };
   
-      // normalize social fields to ensure valid url
       for (const [key, value] of Object.entries(socialFields)) {
         if (value && value.length > 0)
           socialFields[key] = normalize(value, { forceHttps: true });
       }
-      // add to profileFields
       profileFields.social = socialFields;
   
       try {
-        // Using upsert option (creates new doc if no match is found):
         let profile = await Profile.findOneAndUpdate(
           { user: req.user.id },
           { $set: profileFields },
@@ -83,5 +76,33 @@ router.post(
       }
     }
   );
+
+
+router.get('/', async (req, res) => {
+    try {
+        const profiles = await Profile.find().populate('user', ['name', 'avatar'])
+        res.json(profiles)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send("Server error")
+    }
+})
+
+router.get('/user/:user_id', async (req, res) => {
+    try {
+        const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name', 'avatar'])
+
+        if(!profile) return res.status(400).json({ msg: 'Profile not found'})
+        res.json(profile)
+    } catch (error) {
+        console.log(error.message)
+        if(error.kind === 'ObjectId') {
+            return res.status(400).json({ msg: 'Profile not found'})
+        }
+        res.status(500).send("Server error")
+    }
+})
+
+
 
 module.exports = router
