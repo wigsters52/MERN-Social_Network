@@ -7,9 +7,7 @@ const Post = require('../../models/Post');
 const User = require('../../models/User');
 const checkObjectId = require('../../middleware/checkObjectId');
 
-// @route    POST api/posts
-// @desc     Create a post
-// @access   Private
+
 router.post(
   '/',
   auth,
@@ -40,9 +38,7 @@ router.post(
   }
 );
 
-// @route    GET api/posts
-// @desc     Get all posts
-// @access   Private
+
 router.get('/', auth, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
@@ -53,9 +49,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/posts/:id
-// @desc     Get post by ID
-// @access   Private
+
 router.get('/:id', auth, checkObjectId('id'), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -72,9 +66,7 @@ router.get('/:id', auth, checkObjectId('id'), async (req, res) => {
   }
 });
 
-// @route    DELETE api/posts/:id
-// @desc     Delete a post
-// @access   Private
+
 router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -98,9 +90,7 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
   }
 });
 
-// @route    PUT api/posts/like/:id
-// @desc     Like a post
-// @access   Private
+
 router.put('/like/:id', auth, checkObjectId('id'), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -121,9 +111,7 @@ router.put('/like/:id', auth, checkObjectId('id'), async (req, res) => {
   }
 });
 
-// @route    PUT api/posts/unlike/:id
-// @desc     Unlike a post
-// @access   Private
+
 router.put('/unlike/:id', auth, checkObjectId('id'), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -147,9 +135,7 @@ router.put('/unlike/:id', auth, checkObjectId('id'), async (req, res) => {
   }
 });
 
-// @route    POST api/posts/comment/:id
-// @desc     Comment on a post
-// @access   Private
+
 router.post(
   '/comment/:id',
   auth,
@@ -184,9 +170,7 @@ router.post(
   }
 );
 
-// @route    DELETE api/posts/comment/:id/:comment_id
-// @desc     Delete comment
-// @access   Private
+
 router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
